@@ -1,8 +1,14 @@
 package grapher;
 
 import graphs.Graph;
+
 import java.awt.Color;
+
 import java.util.ArrayList;
+
+import java.awt.image.BufferedImage;
+
+import display.ImageLoader;
 
 public class Regression extends Graph {
        
@@ -18,9 +24,7 @@ public class Regression extends Graph {
 
    // @Override
     public void enterData() {
-
-        //EDIT ME TO REFLECT AMOUNT OF PAIRS TO GRAPH BELOW//
-        pairs = 10;
+       
         //EDIT ME/////////////////////////////
         coordsX.add(20.0); coordsY.add(140.0); //pair 1
         coordsX.add(60.0); coordsY.add(180.0); //pair 2..etc
@@ -33,6 +37,7 @@ public class Regression extends Graph {
         coordsX.add(100.0); coordsY.add(120.0);
         coordsX.add(200.0); coordsY.add(295.0);
         ///////////////////////////////////////
+         pairs = coordsX.size();
    
         Operations.setMeanX(coordsX, pairs);
         Operations.setMeanY(coordsY, pairs);
@@ -42,16 +47,21 @@ public class Regression extends Graph {
     }
       
     public static void draw(){
-                  
+                
+        BufferedImage img = ImageLoader.loadImage("/images/background.jpg");
+        g.drawImage(img, 0, 0, null);
+        
         for(int i=0; i<pairs; i++){
             
             long x = Math.round(coordsX.get(i));
             long y = Math.round(coordsY.get(i));
-                                       
+            
             g.setColor(Color.red);
-            g.fillOval( (int)x,(int)y, 6, 6); 
+            g.fillOval( (int)x+8,(300-(int)y), 6, 6); 
+            
         }
                 
-        g.drawLine(0, (int)Math.round(Operations.getIntercept()), getWidth(), (int)(Math.round(Operations.getSlope()*getWidth())+Operations.getIntercept()));          
+        g.drawLine(8, (300-(int)Math.round(Operations.getIntercept())), getWidth(), 300-((int)(Math.round(Operations.getSlope()*getWidth())+Operations.getIntercept())));          
+    
     }
 }
